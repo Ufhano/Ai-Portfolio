@@ -1,5 +1,6 @@
-import {useState} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import axios from 'axios';
+import './App.css';
 
 export default function App() {
   const [messages, setMessages] = useState([
@@ -11,9 +12,14 @@ export default function App() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const bottomRef = useRef(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+  }, [messages, loading]);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || loading) return;
 
     setMessages((prev) => [...prev, {role: 'user', content: input}]);
     setInput('');
@@ -28,7 +34,7 @@ export default function App() {
         ...prev,
         {role: 'assistant', content: res.data.reply},
       ]);
-    } catch (err) {
+    } catch {
       setMessages((prev) => [
         ...prev,
         {
@@ -42,82 +48,33 @@ export default function App() {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.chat}>
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            style={{
-              ...styles.bubble,
-              alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
-              background: msg.role === 'user' ? '#2563eb' : '#111',
-            }}
-          >
-            {msg.content}
-          </div>
-        ))}
-        {loading && <div style={styles.typing}>Typing...</div>}
-      </div>
+    <div className='app'>
+      <div className='chat-container'>
+        <header className='chat-header'>
+          <span>ChatGPT-style Assistant</span>
+        </header>
 
-      <div style={styles.inputRow}>
-        <input
-          style={styles.input}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder='Ask a recruiter-style question...'
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-        />
-        <button style={styles.button} onClick={sendMessage}>
-          Send
-        </button>
+        <main className='chat'>
+          {messages.map((msg, i) => (
+            <div key={i} className={`bubble ${msg.role}`}>
+              {msg.content}
+            </div>
+          ))}
+
+          {loading && <div className='typing'>Typing…</div>}
+          <div ref={bottomRef} />
+        </main>
+
+        <footer className='input-bar'>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder='Ask a recruiter-style question…'
+            onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          />
+          <button onClick={sendMessage}>➤</button>
+        </footer>
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    height: '100vh',
-    background: '#0b0b0b',
-    display: 'flex',
-    flexDirection: 'column',
-    color: 'white',
-  },
-  chat: {
-    flex: 1,
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    overflowY: 'auto',
-  },
-  bubble: {
-    padding: '12px',
-    borderRadius: '10px',
-    maxWidth: '70%',
-    lineHeight: '1.4',
-  },
-  inputRow: {
-    display: 'flex',
-    borderTop: '1px solid #222',
-  },
-  input: {
-    flex: 1,
-    padding: '14px',
-    background: '#111',
-    color: 'white',
-    border: 'none',
-    outline: 'none',
-  },
-  button: {
-    padding: '14px 20px',
-    background: '#2563eb',
-    border: 'none',
-    color: 'white',
-    cursor: 'pointer',
-  },
-  typing: {
-    opacity: 0.6,
-    fontSize: '14px',
-  },
-};
