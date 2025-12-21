@@ -51,7 +51,7 @@ export default function App() {
     <div className='app'>
       <div className='chat-container'>
         <header className='chat-header'>
-          <span>ChatGPT-style Assistant</span>
+          <span>AI-Resume</span>
         </header>
 
         <main className='chat'>
