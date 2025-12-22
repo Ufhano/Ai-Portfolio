@@ -151,3 +151,58 @@ body {
   color: #05070f;
   cursor: pointer;
 }
+/* =====================
+   SUGGESTION CHIPS
+===================== */
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.suggestion {
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+
+  background: rgba(100, 108, 255, 0.15);
+  border: 1px solid rgba(100, 108, 255, 0.35);
+  color: #e6e9ff;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.suggestion:hover {
+  background: rgba(100, 108, 255, 0.3);
+}
+
+/* =====================
+   TYPING INDICATOR
+===================== */
+.typing::after {
+  content: '';
+  animation: dots 1.5s infinite;
+}
+
+@keyframes dots {
+  0% {
+    content: '';
+  }
+  33% {
+    content: '.';
+  }
+  66% {
+    content: '..';
+  }
+  100% {
+    content: '...';
+  }
+}
+.timestamp {
+  margin-top: 0.35rem;
+  font-size: 0.65rem;
+  opacity: 0.6;
+  text-align: right;
+}
