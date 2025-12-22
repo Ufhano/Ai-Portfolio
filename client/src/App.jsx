@@ -2,6 +2,11 @@ import {useState} from 'react';
 import './App.css';
 import {useChat} from './hooks/useChat';
 
+import ChatContainer from './components/ChatContainer';
+import MessageBubble from './components/MessageBubble';
+import InputBar from './components/InputBar';
+import SuggestionChips from './components/SuggestionChips';
+
 export default function App() {
   const [input, setInput] = useState('');
   const {messages, loading, sendMessage, bottomRef} = useChat();
@@ -15,62 +20,34 @@ export default function App() {
 
   return (
     <div className='app'>
-      <div className='chat-container'>
-        <header className='chat-header'>AI-Resume</header>
-
+      <ChatContainer>
         <main className='chat'>
           {messages.length === 1 && (
-            <div className='suggestions'>
-              {suggestions.map((text, i) => (
-                <button
-                  key={i}
-                  className='suggestion'
-                  onClick={() => sendMessage(text)}
-                >
-                  {text}
-                </button>
-              ))}
-            </div>
+            <SuggestionChips suggestions={suggestions} onSelect={sendMessage} />
           )}
 
           {messages.map((msg, i) => (
-            <div key={i} className={`bubble ${msg.role}`}>
-              <div className='message-content'>{msg.content}</div>
-              <div className='timestamp'>
-                {new Date(msg.createdAt).toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </div>
-            </div>
+            <MessageBubble
+              key={i}
+              role={msg.role}
+              content={msg.content}
+              createdAt={msg.createdAt}
+            />
           ))}
 
           {loading && <div className='typing'>Typing</div>}
           <div ref={bottomRef} />
         </main>
 
-        <footer className='input-bar'>
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder='Ask a recruiter-style question…'
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                sendMessage(input);
-                setInput('');
-              }
-            }}
-          />
-          <button
-            onClick={() => {
-              sendMessage(input);
-              setInput('');
-            }}
-          >
-            ➤
-          </button>
-        </footer>
-      </div>
+        <InputBar
+          value={input}
+          onChange={setInput}
+          onSend={() => {
+            sendMessage(input);
+            setInput('');
+          }}
+        />
+      </ChatContainer>
     </div>
   );
 }
