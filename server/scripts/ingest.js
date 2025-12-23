@@ -1,8 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+
 import Document from '../models/Document.js';
-import {embedText} from '../services/embeddings.js';
+import {embedText} from '../services/embedding.service.js';
+
+dotenv.config();
 
 await mongoose.connect(process.env.MONGO_URI);
 
@@ -11,7 +15,6 @@ const files = fs.readdirSync(dataDir);
 
 for (const file of files) {
   const content = fs.readFileSync(path.join(dataDir, file), 'utf-8');
-
   const embedding = await embedText(content);
 
   await Document.create({content, embedding});
@@ -19,4 +22,5 @@ for (const file of files) {
   console.log(`Embedded ${file}`);
 }
 
+console.log('Ingestion complete');
 process.exit();
