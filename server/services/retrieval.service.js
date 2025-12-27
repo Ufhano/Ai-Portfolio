@@ -1,4 +1,4 @@
-import Document from '../models/Document.js';
+import Document from '../models/Documents.js';
 import {embedText} from './embedding.service.js';
 
 export async function retrieveRelevantContext(query) {

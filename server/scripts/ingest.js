@@ -3,7 +3,7 @@ import path from 'path';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-import Document from '../models/Document.js';
+import Document from '../models/Documents.js';
 import {embedText} from '../services/embedding.service.js';
 
 dotenv.config();

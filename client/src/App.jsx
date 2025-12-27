@@ -2,10 +2,10 @@ import {useState} from 'react';
 import './App.css';
 import {useChat} from './hooks/useChat';
 
-import ChatContainer from './components/ChatContainer';
-import MessageBubble from './components/MessageBubble';
-import InputBar from './components/InputBar';
-import SuggestionChips from './components/SuggestionChips';
+import ChatContainer from './componets/ChatContainer';
+import MessageBubble from './componets/MessageBubble';
+import InputBar from './componets/InputBar';
+import SuggestionChips from './componets/SuggestionChips';
 
 export default function App() {
   const [input, setInput] = useState('');

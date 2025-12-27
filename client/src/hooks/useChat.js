@@ -6,7 +6,7 @@ export function useChat() {
     {
       role: 'assistant',
       content:
-        'Hi 👋 I’m Ufhano’s AI portfolio assistant.\n\nYou can ask me about his skills, experience, projects, or DevOps background — or click one of the suggestions below to get started.',
+        'Hi  I’m Ufhano’s AI portfolio assistant.\n\nYou can ask me about his skills, experience, projects, or DevOps background  or click one of the suggestions below to get started.',
       createdAt: Date.now(),
     },
   ]);
