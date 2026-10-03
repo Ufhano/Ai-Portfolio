@@ -15,7 +15,8 @@ export function useChat() {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    const scroller = bottomRef.current?.parentElement;
+    scroller?.scrollTo({top: scroller.scrollHeight, behavior: 'smooth'});
   }, [messages, loading]);
 
   const sendMessage = async (message) => {
