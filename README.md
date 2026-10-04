@@ -6,11 +6,11 @@ Built as a full MERN stack application with a modern chat UI and deployed to pro
 
  Live Demo
 
-Frontend (Vercel):
+App and API (Vercel):
    https://ai-portfolio-ivory-seven.vercel.app
 
-Backend API (Render):
-  https://ufhano-gpt.onrender.com
+Health check:
+   https://ai-portfolio-ivory-seven.vercel.app/api/health
 
  Features
 
@@ -38,7 +38,7 @@ Backend
 - MongoDB (Mongoose)
 - OpenAI API
 - Rate limiting middleware
-- Deployed on **Render**
+- Deployed on **Vercel**
 
 What This Project Demonstrates
 

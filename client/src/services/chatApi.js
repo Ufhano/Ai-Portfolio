@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const devApi = import.meta.env.DEV ? import.meta.env.VITE_API_URL : '';
 
 export async function sendChatMessage(message, history = []) {
-  const response = await axios.post(`${API_URL}/api/chat`, {
+  const base = devApi ? devApi.replace(/\/$/, '') : '';
+  const response = await axios.post(`${base}/api/chat`, {
     message,
     history,
   });
