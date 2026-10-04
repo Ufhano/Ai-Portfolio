@@ -79,7 +79,7 @@ export async function getChatReply(userMessage, history = []) {
     {role: 'system', content: buildSystemPrompt()},
     {
       role: 'system',
-      content: `Notes from the portfolio:\n${context || 'None'}\n\nPublic projects:\n${projects || 'None'}\n\nIf this question needs a link, search the web for "Ufhano Tshivhidzo" and the project just discussed, then answer with the URLs you find.`,
+      content: `Portfolio notes, for background only. Do not mention a project from these notes unless the verified list or the GitHub list below has a URL for it:\n${context || 'None'}\n\nExtra public GitHub repositories. Mention one only if it has a URL printed here:\n${projects || 'None'}\n\nIf they ask for a link, use the verified URL. Do not describe a project that has no URL.`,
     },
     ...prior,
     {role: 'user', content: userMessage},
