@@ -1,7 +1,7 @@
-import {openai} from './openai.js';
+import {getOpenAI} from './openai.js';
 
 export async function embedText(text) {
-  const response = await openai.embeddings.create({
+  const response = await getOpenAI().embeddings.create({
     model: 'text-embedding-3-small',
     input: text,
   });

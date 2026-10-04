@@ -1,4 +1,4 @@
-import {openai} from './openai.js';
+import {getOpenAI} from './openai.js';
 import {buildSystemPrompt} from './prompt.builder.js';
 import {retrieveRelevantContext} from './retrieval.service.js';
 import {listPublicProjects} from './projects.service.js';
@@ -36,7 +36,7 @@ function safeHistory(history) {
 
 async function complete(messages, search) {
   if (!search) {
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: 'gpt-4o-mini',
       messages,
     });
@@ -44,7 +44,7 @@ async function complete(messages, search) {
   }
 
   try {
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: 'gpt-4o-mini-search-preview',
       web_search_options: {search_context_size: 'low'},
       messages,
@@ -52,7 +52,7 @@ async function complete(messages, search) {
     return completion.choices[0].message.content;
   } catch (error) {
     console.error('Web search failed:', error.message);
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: 'gpt-4o-mini',
       messages,
     });
