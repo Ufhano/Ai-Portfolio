@@ -22,6 +22,11 @@ export function useChat() {
   const sendMessage = async (message) => {
     if (!message?.trim() || loading) return;
 
+    const history = messages.slice(-8).map(({role, content}) => ({
+      role,
+      content,
+    }));
+
     setMessages((prev) => [
       ...prev,
       {role: 'user', content: message, createdAt: Date.now()},
@@ -30,7 +35,7 @@ export function useChat() {
     setLoading(true);
 
     try {
-      const reply = await sendChatMessage(message);
+      const reply = await sendChatMessage(message, history);
 
       // Artificial delay for realism
       await new Promise((resolve) => setTimeout(resolve, 600));

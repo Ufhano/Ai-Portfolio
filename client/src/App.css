@@ -213,6 +213,11 @@
   font-size: 0.95rem;
 }
 
+.message-content a {
+  color: #e85d04;
+  word-break: break-all;
+}
+
 .log-row.user .message-content {
   font-weight: 500;
 }

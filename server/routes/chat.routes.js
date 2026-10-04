@@ -6,13 +6,13 @@ const router = express.Router();
 
 router.post('/', chatRateLimiter, async (req, res) => {
   try {
-    const {message} = req.body;
+    const {message, history} = req.body;
 
-    if (!message) {
+    if (typeof message !== 'string' || !message.trim()) {
       return res.status(400).json({error: 'Message is required'});
     }
 
-    const reply = await getChatReply(message);
+    const reply = await getChatReply(message, history);
     res.json({reply});
   } catch (error) {
     console.error('Chat error:', error);
